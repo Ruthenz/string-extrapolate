@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true,
     "lib": ["esnext", "DOM"],
     "outDir": "dist"
