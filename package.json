@@ -2,11 +2,13 @@
   "name": "string-extrapolate",
   "version": "1.0.0",
   "description": "Extrapolate from a string using a given template",
-  "main": "dist/index.js",
+  "main": "dist/string-extrapolate.js",
+  "module": "dist/string-extrapolate.mjs",
+  "typings": "dist/string-extrapolate.d.ts",
   "scripts": {
     "start": "node dist/index.js",
     "watch": "tsc --watch",
-    "build": "tsc",
+    "build": "yarn test && rollup -c",
     "test": "jest --verbose"
   },
   "repository": {
@@ -25,7 +27,11 @@
   "homepage": "https://github.com/Ruthenz/string-extrapolate#readme",
   "devDependencies": {
     "@types/jest": "^29.0.0",
+    "esbuild": "^0.15.6",
     "jest": "^28.1.3",
+    "rollup": "^2.78.1",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-esbuild": "^4.10.1",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
   }
