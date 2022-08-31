@@ -1,20 +1,4 @@
-import { removeFirstAndLastChars, zipObject } from "./utils";
-
-/**
-  *
-  * /     - delimiter
-  * \{    - opening literal brace escaped because it is a special character used for quantifiers eg {2,3}
-  * (     - start capturing
-  * [^}]  - character class consisting of
-  *   ^   - not
-  *   }   - a closing brace (no escaping necessary because special characters in a character class are different)
-  * +     - one or more of the character class
-  * )     - end capturing
-  * \}    - the closing literal brace
-  * /     - delimiter
-  *
-  */
-const insideCurlyBraces = /\{([^}]+)\}/g;
+import { getPlaceholders, replaceTemplatePlaceholders, zipObject } from "./utils";
 
 /**
   *
@@ -27,6 +11,13 @@ const insideCurlyBraces = /\{([^}]+)\}/g;
   *
   */
 const regexForAnyCharButNewline = '([^\\n]+)';
+
+interface ExtrapolateConfig {
+  /** String to indicate placeholder open */
+  opener: string,
+  /** String to indicate placeholder close */
+  closer: string
+}
 
 /**
   *
@@ -48,19 +39,23 @@ const regexForAnyCharButNewline = '([^\\n]+)';
   * and there is less chance for an uncaught destructing error.
   *
   */
-export default function extrapolate(template: string, input: string): Record<string, string> {
+export default function extrapolate(template: string, input: string, config?: ExtrapolateConfig): Record<string, string> {
   if (!template || !input) return {};
 
-  const placeholders = template.match(insideCurlyBraces);
-  if (!placeholders) return {};
+  const placeholders = getPlaceholders(template, config);
+  if (!placeholders || !placeholders.length) return {};
 
-  const keys = placeholders.map(removeFirstAndLastChars);
-	const regexTemplate = template.replaceAll(insideCurlyBraces, regexForAnyCharButNewline);
+  const keys = placeholders.map(({ key }) => key);
+
+  const regexTemplate = replaceTemplatePlaceholders(template, placeholders, regexForAnyCharButNewline);
 
 	const matches = input.match(regexTemplate);
 	if (!matches) return {};
 
   const values = matches.slice(1);
 
-  return zipObject(keys, values);
+  const result = zipObject(keys, values);
+  if (!result) return {};
+
+  return result;
 }
