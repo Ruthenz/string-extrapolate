@@ -1,6 +1,6 @@
 {
   "name": "string-extrapolate",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Extrapolate from a string using a given template",
   "main": "dist/string-extrapolate.js",
   "module": "dist/string-extrapolate.mjs",
