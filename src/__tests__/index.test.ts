@@ -7,6 +7,7 @@ describe('extrapolate', () => {
     expect(extrapolate('', '')).toEqual({});
     expect(extrapolate('   ', '')).toEqual({});
     expect(extrapolate('', '     ')).toEqual({});
+    expect(extrapolate('asd/{id}', undefined)).toEqual({});
   });
 
   it('should return empty object if a template without proper placeholders is given', () => {

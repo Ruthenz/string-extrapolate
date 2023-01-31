@@ -49,10 +49,10 @@ export default function extrapolate(template: string, input: string, config?: Ex
 
   const regexTemplate = replaceTemplatePlaceholders(template, placeholders, regexForAnyCharButNewline);
 
-	const matches = input.match(regexTemplate);
-	if (!matches) return {};
+  const matches = input.match(regexTemplate);
+  if (!matches) return {};
 
-  const values = matches.slice(1);
+  const values = matches.slice(1); // first match for regex matching is irrelevant
 
   const result = zipObject(keys, values);
   if (!result) return {};

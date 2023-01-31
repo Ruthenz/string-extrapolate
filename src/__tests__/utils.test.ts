@@ -132,6 +132,8 @@ describe('replace', () => {
     expect(replace('aba', 'zzzz', 0, 0)).toEqual('zzzzba');
     expect(replace('aba', 'zzzz', 0, 1)).toEqual('zzzza');
     expect(replace('Cool is asd', 'what', 5, 6)).toEqual('Cool what asd');
+    expect(replace('What replace this', 'is', 5, 11)).toEqual('What is this');
+    expect(replace('What replace this', 'is', 5)).toEqual('What isplace this');
   });
 });
 

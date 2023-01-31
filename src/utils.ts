@@ -16,9 +16,10 @@
 export function zipObject<T>(keys: string[], values: T[]): Record<string, T> {
   if (!Array.isArray(keys) || !Array.isArray(values) || keys.length !== values.length) return;
 
-  const result = {} as Record<string, T>;
-  keys.forEach((key, index) => result[key] = values[index]);
-  return result;
+  return keys.reduce((result, key, index) => {
+    result[key] = values[index];
+    return result;
+  }, {});
 }
 
 interface Placeholder {
@@ -99,7 +100,7 @@ export function getPlaceholders(
   *
   */
 export function replace(input: string, replacement: string, from: number, to?: number) {
-  if (to === undefined || to === null) to = replacement.length - 1;
+  if (to === undefined || to === null) to = from + replacement.length - 1;
   if (from > to || input.length < from || input.length < to) return;
 
   return input.substring(0, from) + replacement + input.substring(to + 1);
