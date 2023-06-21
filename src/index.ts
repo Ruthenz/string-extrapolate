@@ -1,4 +1,4 @@
-import { getPlaceholders, replaceTemplatePlaceholders, zipObject } from "./utils";
+import { escapeRegex, getPlaceholders, replaceTemplatePlaceholders, zipObject } from "./utils";
 
 /**
   *
@@ -10,7 +10,9 @@ import { getPlaceholders, replaceTemplatePlaceholders, zipObject } from "./utils
   * )   - end capturing
   *
   */
-const regexForAnyCharButNewline = '([^\\n]+)';
+const REGEX_ANY_CHAR_BUT_NEWLINE = '([^\\n]+)';
+
+const REGEX_TEMPLATE_PLACEHOLDER = "___PLACEHOLDER___";
 
 interface ExtrapolateConfig {
   /** String to indicate placeholder open */
@@ -47,7 +49,9 @@ export default function extrapolate(template: string, input: string, config?: Ex
 
   const keys = placeholders.map(({ key }) => key);
 
-  const regexTemplate = replaceTemplatePlaceholders(template, placeholders, regexForAnyCharButNewline);
+  const regexTemplateWithPlaceholders = replaceTemplatePlaceholders(template, placeholders, REGEX_TEMPLATE_PLACEHOLDER);
+  const escapedRegexTemplate = escapeRegex(regexTemplateWithPlaceholders);
+  const regexTemplate = escapedRegexTemplate.replaceAll(REGEX_TEMPLATE_PLACEHOLDER, REGEX_ANY_CHAR_BUT_NEWLINE);
 
   const matches = input.match(regexTemplate);
   if (!matches) return {};

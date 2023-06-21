@@ -23,6 +23,7 @@ describe('extrapolate', () => {
 
   it('should return correctly', () => {
     expect(extrapolate('a{asd}', 'acxz')).toEqual({ asd: 'cxz' });
+    expect(extrapolate('({a},{b})', '(1,2)')).toEqual({ a: '1', b: '2' });
     expect(extrapolate('http://something.com/{id}', 'http://something.com/123123')).toEqual({ id: '123123' });
     expect(extrapolate('My name is {name}', 'My name is guy')).toEqual({ name: 'guy' });
     expect(extrapolate('{one} with {two} and {three}', 'first with second and third')).toEqual({ one: 'first', two: 'second', three: 'third' });

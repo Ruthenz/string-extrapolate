@@ -125,3 +125,10 @@ export function replaceTemplatePlaceholders(template: string, placeholders: Plac
   });
   return result;
 }
+
+/**
+  * Escapes all regex characters in a string
+  */
+export function escapeRegex(text: string) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
