@@ -1,6 +1,6 @@
 {
   "name": "string-extrapolate",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Extrapolate from a string using a given template",
   "main": "dist/string-extrapolate.js",
   "module": "dist/string-extrapolate.mjs",
@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "watch": "tsc --watch",
-    "build": "yarn test && rollup -c",
+    "build": "npm run test && rollup -c",
     "test": "jest --verbose"
   },
   "repository": {
